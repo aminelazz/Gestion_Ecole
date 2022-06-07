@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Gestion_EcoleModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Authentication">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="First_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Password" Type="varchar" MaxLength="20" />
+          <Property Name="Type" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Etudiant">
+          <Key>
+            <PropertyRef Name="ID_etudiant" />
+          </Key>
+          <Property Name="ID_etudiant" Type="int" Nullable="false" />
+          <Property Name="ID_groupe" Type="int" />
+          <Property Name="Prenom" Type="varchar" MaxLength="20" />
+          <Property Name="Nom" Type="varchar" MaxLength="20" />
+          <Property Name="Date_naissance" Type="date" />
+        </EntityType>
+        <EntityType Name="Filiere">
+          <Key>
+            <PropertyRef Name="ID_filiere" />
+          </Key>
+          <Property Name="ID_filiere" Type="int" Nullable="false" />
+          <Property Name="Nom_filiere" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Filiere_contient_matiere">
+          <Key>
+            <PropertyRef Name="ID_filiere" />
+            <PropertyRef Name="ID_matiere" />
+          </Key>
+          <Property Name="ID_filiere" Type="int" Nullable="false" />
+          <Property Name="ID_matiere" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Grp_etudiant">
+          <Key>
+            <PropertyRef Name="ID_groupe" />
+          </Key>
+          <Property Name="ID_groupe" Type="int" Nullable="false" />
+          <Property Name="ID_filiere" Type="int" />
+          <Property Name="Nbr_etudiant" Type="int" />
+        </EntityType>
+        <EntityType Name="Grp_etudie_matiere">
+          <Key>
+            <PropertyRef Name="ID_groupe" />
+            <PropertyRef Name="ID_matiere" />
+          </Key>
+          <Property Name="ID_groupe" Type="int" Nullable="false" />
+          <Property Name="ID_matiere" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matiere">
+          <Key>
+            <PropertyRef Name="ID_matiere" />
+          </Key>
+          <Property Name="ID_matiere" Type="int" Nullable="false" />
+          <Property Name="Nom_matiere" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <Association Name="FK__Etudiant__ID_gro__2B3F6F97">
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="0..1" />
+          <End Role="Etudiant" Type="Self.Etudiant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grp_etudiant">
+              <PropertyRef Name="ID_groupe" />
+            </Principal>
+            <Dependent Role="Etudiant">
+              <PropertyRef Name="ID_groupe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Filiere_c__ID_fi__31EC6D26">
+          <End Role="Filiere" Type="Self.Filiere" Multiplicity="1" />
+          <End Role="Filiere_contient_matiere" Type="Self.Filiere_contient_matiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filiere">
+              <PropertyRef Name="ID_filiere" />
+            </Principal>
+            <Dependent Role="Filiere_contient_matiere">
+              <PropertyRef Name="ID_filiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Filiere_c__ID_ma__32E0915F">
+          <End Role="Matiere" Type="Self.Matiere" Multiplicity="1" />
+          <End Role="Filiere_contient_matiere" Type="Self.Filiere_contient_matiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matiere">
+              <PropertyRef Name="ID_matiere" />
+            </Principal>
+            <Dependent Role="Filiere_contient_matiere">
+              <PropertyRef Name="ID_matiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grp_etudi__ID_fi__286302EC">
+          <End Role="Filiere" Type="Self.Filiere" Multiplicity="0..1" />
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filiere">
+              <PropertyRef Name="ID_filiere" />
+            </Principal>
+            <Dependent Role="Grp_etudiant">
+              <PropertyRef Name="ID_filiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grp_etudi__ID_gr__2E1BDC42">
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="1" />
+          <End Role="Grp_etudie_matiere" Type="Self.Grp_etudie_matiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grp_etudiant">
+              <PropertyRef Name="ID_groupe" />
+            </Principal>
+            <Dependent Role="Grp_etudie_matiere">
+              <PropertyRef Name="ID_groupe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grp_etudi__ID_ma__2F10007B">
+          <End Role="Matiere" Type="Self.Matiere" Multiplicity="1" />
+          <End Role="Grp_etudie_matiere" Type="Self.Grp_etudie_matiere" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matiere">
+              <PropertyRef Name="ID_matiere" />
+            </Principal>
+            <Dependent Role="Grp_etudie_matiere">
+              <PropertyRef Name="ID_matiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Gestion_EcoleModelStoreContainer">
+          <EntitySet Name="Authentication" EntityType="Self.Authentication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Etudiant" EntityType="Self.Etudiant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filiere" EntityType="Self.Filiere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Filiere_contient_matiere" EntityType="Self.Filiere_contient_matiere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grp_etudiant" EntityType="Self.Grp_etudiant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grp_etudie_matiere" EntityType="Self.Grp_etudie_matiere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matiere" EntityType="Self.Matiere" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Etudiant__ID_gro__2B3F6F97" Association="Self.FK__Etudiant__ID_gro__2B3F6F97">
+            <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
+            <End Role="Etudiant" EntitySet="Etudiant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Filiere_c__ID_fi__31EC6D26" Association="Self.FK__Filiere_c__ID_fi__31EC6D26">
+            <End Role="Filiere" EntitySet="Filiere" />
+            <End Role="Filiere_contient_matiere" EntitySet="Filiere_contient_matiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Filiere_c__ID_ma__32E0915F" Association="Self.FK__Filiere_c__ID_ma__32E0915F">
+            <End Role="Matiere" EntitySet="Matiere" />
+            <End Role="Filiere_contient_matiere" EntitySet="Filiere_contient_matiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grp_etudi__ID_fi__286302EC" Association="Self.FK__Grp_etudi__ID_fi__286302EC">
+            <End Role="Filiere" EntitySet="Filiere" />
+            <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grp_etudi__ID_gr__2E1BDC42" Association="Self.FK__Grp_etudi__ID_gr__2E1BDC42">
+            <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
+            <End Role="Grp_etudie_matiere" EntitySet="Grp_etudie_matiere" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grp_etudi__ID_ma__2F10007B" Association="Self.FK__Grp_etudi__ID_ma__2F10007B">
+            <End Role="Matiere" EntitySet="Matiere" />
+            <End Role="Grp_etudie_matiere" EntitySet="Grp_etudie_matiere" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Gestion_EcoleModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Authentication">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Etudiant">
+          <Key>
+            <PropertyRef Name="ID_etudiant" />
+          </Key>
+          <Property Name="ID_etudiant" Type="Int32" Nullable="false" />
+          <Property Name="ID_groupe" Type="Int32" />
+          <Property Name="Prenom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Date_naissance" Type="DateTime" />
+          <NavigationProperty Name="Grp_etudiant" Relationship="Self.FK__Etudiant__ID_gro__2B3F6F97" FromRole="Etudiant" ToRole="Grp_etudiant" />
+        </EntityType>
+        <EntityType Name="Filiere">
+          <Key>
+            <PropertyRef Name="ID_filiere" />
+          </Key>
+          <Property Name="ID_filiere" Type="Int32" Nullable="false" />
+          <Property Name="Nom_filiere" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Grp_etudiant" Relationship="Self.FK__Grp_etudi__ID_fi__286302EC" FromRole="Filiere" ToRole="Grp_etudiant" />
+          <NavigationProperty Name="Matiere" Relationship="Self.Filiere_contient_matiere" FromRole="Filiere" ToRole="Matiere" />
+        </EntityType>
+        <EntityType Name="Grp_etudiant">
+          <Key>
+            <PropertyRef Name="ID_groupe" />
+          </Key>
+          <Property Name="ID_groupe" Type="Int32" Nullable="false" />
+          <Property Name="ID_filiere" Type="Int32" />
+          <Property Name="Nbr_etudiant" Type="Int32" />
+          <NavigationProperty Name="Etudiant" Relationship="Self.FK__Etudiant__ID_gro__2B3F6F97" FromRole="Grp_etudiant" ToRole="Etudiant" />
+          <NavigationProperty Name="Filiere" Relationship="Self.FK__Grp_etudi__ID_fi__286302EC" FromRole="Grp_etudiant" ToRole="Filiere" />
+          <NavigationProperty Name="Matiere" Relationship="Self.Grp_etudie_matiere" FromRole="Grp_etudiant" ToRole="Matiere" />
+        </EntityType>
+        <EntityType Name="Matiere">
+          <Key>
+            <PropertyRef Name="ID_matiere" />
+          </Key>
+          <Property Name="ID_matiere" Type="Int32" Nullable="false" />
+          <Property Name="Nom_matiere" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Filiere" Relationship="Self.Filiere_contient_matiere" FromRole="Matiere" ToRole="Filiere" />
+          <NavigationProperty Name="Grp_etudiant" Relationship="Self.Grp_etudie_matiere" FromRole="Matiere" ToRole="Grp_etudiant" />
+        </EntityType>
+        <Association Name="FK__Etudiant__ID_gro__2B3F6F97">
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="0..1" />
+          <End Role="Etudiant" Type="Self.Etudiant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grp_etudiant">
+              <PropertyRef Name="ID_groupe" />
+            </Principal>
+            <Dependent Role="Etudiant">
+              <PropertyRef Name="ID_groupe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Grp_etudi__ID_fi__286302EC">
+          <End Role="Filiere" Type="Self.Filiere" Multiplicity="0..1" />
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Filiere">
+              <PropertyRef Name="ID_filiere" />
+            </Principal>
+            <Dependent Role="Grp_etudiant">
+              <PropertyRef Name="ID_filiere" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Filiere_contient_matiere">
+          <End Role="Filiere" Type="Self.Filiere" Multiplicity="*" />
+          <End Role="Matiere" Type="Self.Matiere" Multiplicity="*" />
+        </Association>
+        <Association Name="Grp_etudie_matiere">
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="*" />
+          <End Role="Matiere" Type="Self.Matiere" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Gestion_Ecole" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authentication" EntityType="Self.Authentication" />
+          <EntitySet Name="Etudiant" EntityType="Self.Etudiant" />
+          <EntitySet Name="Filiere" EntityType="Self.Filiere" />
+          <EntitySet Name="Grp_etudiant" EntityType="Self.Grp_etudiant" />
+          <EntitySet Name="Matiere" EntityType="Self.Matiere" />
+          <AssociationSet Name="FK__Etudiant__ID_gro__2B3F6F97" Association="Self.FK__Etudiant__ID_gro__2B3F6F97">
+            <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
+            <End Role="Etudiant" EntitySet="Etudiant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Grp_etudi__ID_fi__286302EC" Association="Self.FK__Grp_etudi__ID_fi__286302EC">
+            <End Role="Filiere" EntitySet="Filiere" />
+            <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
+          </AssociationSet>
+          <AssociationSet Name="Filiere_contient_matiere" Association="Self.Filiere_contient_matiere">
+            <End Role="Filiere" EntitySet="Filiere" />
+            <End Role="Matiere" EntitySet="Matiere" />
+          </AssociationSet>
+          <AssociationSet Name="Grp_etudie_matiere" Association="Self.Grp_etudie_matiere">
+            <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
+            <End Role="Matiere" EntitySet="Matiere" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Gestion_EcoleModelStoreContainer" CdmEntityContainer="Gestion_Ecole">
+          <EntitySetMapping Name="Authentication">
+            <EntityTypeMapping TypeName="Gestion_EcoleModel.Authentication">
+              <MappingFragment StoreEntitySet="Authentication">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Etudiant">
+            <EntityTypeMapping TypeName="Gestion_EcoleModel.Etudiant">
+              <MappingFragment StoreEntitySet="Etudiant">
+                <ScalarProperty Name="ID_etudiant" ColumnName="ID_etudiant" />
+                <ScalarProperty Name="ID_groupe" ColumnName="ID_groupe" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Date_naissance" ColumnName="Date_naissance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Filiere">
+            <EntityTypeMapping TypeName="Gestion_EcoleModel.Filiere">
+              <MappingFragment StoreEntitySet="Filiere">
+                <ScalarProperty Name="ID_filiere" ColumnName="ID_filiere" />
+                <ScalarProperty Name="Nom_filiere" ColumnName="Nom_filiere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grp_etudiant">
+            <EntityTypeMapping TypeName="Gestion_EcoleModel.Grp_etudiant">
+              <MappingFragment StoreEntitySet="Grp_etudiant">
+                <ScalarProperty Name="ID_groupe" ColumnName="ID_groupe" />
+                <ScalarProperty Name="ID_filiere" ColumnName="ID_filiere" />
+                <ScalarProperty Name="Nbr_etudiant" ColumnName="Nbr_etudiant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matiere">
+            <EntityTypeMapping TypeName="Gestion_EcoleModel.Matiere">
+              <MappingFragment StoreEntitySet="Matiere">
+                <ScalarProperty Name="ID_matiere" ColumnName="ID_matiere" />
+                <ScalarProperty Name="Nom_matiere" ColumnName="Nom_matiere" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Filiere_contient_matiere" TypeName="Gestion_EcoleModel.Filiere_contient_matiere" StoreEntitySet="Filiere_contient_matiere">
+            <EndProperty Name="Filiere">
+              <ScalarProperty Name="ID_filiere" ColumnName="ID_filiere" />
+            </EndProperty>
+            <EndProperty Name="Matiere">
+              <ScalarProperty Name="ID_matiere" ColumnName="ID_matiere" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Grp_etudie_matiere" TypeName="Gestion_EcoleModel.Grp_etudie_matiere" StoreEntitySet="Grp_etudie_matiere">
+            <EndProperty Name="Grp_etudiant">
+              <ScalarProperty Name="ID_groupe" ColumnName="ID_groupe" />
+            </EndProperty>
+            <EndProperty Name="Matiere">
+              <ScalarProperty Name="ID_matiere" ColumnName="ID_matiere" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
