@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.options_uc1 = new Gestion_Ecole.Main.UserControls.Options.options_uc();
+            //this.options_uc1 = new Gestion_Ecole.Main.UserControls.Options.options_uc();
             this.SuspendLayout();
             // 
             // options_uc1

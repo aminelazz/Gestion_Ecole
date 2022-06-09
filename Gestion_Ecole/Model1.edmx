@@ -10,27 +10,27 @@
             <PropertyRef Name="Username" />
           </Key>
           <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="First_Name" Type="varchar" MaxLength="20" />
-          <Property Name="Last_Name" Type="varchar" MaxLength="20" />
-          <Property Name="Password" Type="varchar" MaxLength="20" />
-          <Property Name="Type" Type="varchar" MaxLength="20" />
+          <Property Name="First_Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Last_Name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Etudiant">
           <Key>
             <PropertyRef Name="ID_etudiant" />
           </Key>
           <Property Name="ID_etudiant" Type="int" Nullable="false" />
-          <Property Name="ID_groupe" Type="int" />
-          <Property Name="Prenom" Type="varchar" MaxLength="20" />
-          <Property Name="Nom" Type="varchar" MaxLength="20" />
-          <Property Name="Date_naissance" Type="date" />
+          <Property Name="ID_groupe" Type="int" Nullable="false" />
+          <Property Name="Prenom" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Nom" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Date_naissance" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="Filiere">
           <Key>
             <PropertyRef Name="ID_filiere" />
           </Key>
           <Property Name="ID_filiere" Type="int" Nullable="false" />
-          <Property Name="Nom_filiere" Type="varchar" MaxLength="20" />
+          <Property Name="Nom_filiere" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="Filiere_contient_matiere">
           <Key>
@@ -45,8 +45,8 @@
             <PropertyRef Name="ID_groupe" />
           </Key>
           <Property Name="ID_groupe" Type="int" Nullable="false" />
-          <Property Name="ID_filiere" Type="int" />
-          <Property Name="Nbr_etudiant" Type="int" />
+          <Property Name="ID_filiere" Type="int" Nullable="false" />
+          <Property Name="Nbr_etudiant" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Grp_etudie_matiere">
           <Key>
@@ -56,15 +56,22 @@
           <Property Name="ID_groupe" Type="int" Nullable="false" />
           <Property Name="ID_matiere" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Helper">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="VALUE" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Matiere">
           <Key>
             <PropertyRef Name="ID_matiere" />
           </Key>
           <Property Name="ID_matiere" Type="int" Nullable="false" />
-          <Property Name="Nom_matiere" Type="varchar" MaxLength="20" />
+          <Property Name="Nom_matiere" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <Association Name="FK__Etudiant__ID_gro__2B3F6F97">
-          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="0..1" />
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="1" />
           <End Role="Etudiant" Type="Self.Etudiant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Grp_etudiant">
@@ -100,7 +107,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Grp_etudi__ID_fi__286302EC">
-          <End Role="Filiere" Type="Self.Filiere" Multiplicity="0..1" />
+          <End Role="Filiere" Type="Self.Filiere" Multiplicity="1" />
           <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Filiere">
@@ -142,6 +149,7 @@
           <EntitySet Name="Filiere_contient_matiere" EntityType="Self.Filiere_contient_matiere" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grp_etudiant" EntityType="Self.Grp_etudiant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Grp_etudie_matiere" EntityType="Self.Grp_etudie_matiere" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Helper" EntityType="Self.Helper" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Matiere" EntityType="Self.Matiere" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Etudiant__ID_gro__2B3F6F97" Association="Self.FK__Etudiant__ID_gro__2B3F6F97">
             <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
@@ -178,20 +186,20 @@
             <PropertyRef Name="Username" />
           </Key>
           <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="First_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Last_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="First_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityType Name="Etudiant">
           <Key>
             <PropertyRef Name="ID_etudiant" />
           </Key>
           <Property Name="ID_etudiant" Type="Int32" Nullable="false" />
-          <Property Name="ID_groupe" Type="Int32" />
-          <Property Name="Prenom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Nom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Date_naissance" Type="DateTime" />
+          <Property Name="ID_groupe" Type="Int32" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nom" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date_naissance" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Grp_etudiant" Relationship="Self.FK__Etudiant__ID_gro__2B3F6F97" FromRole="Etudiant" ToRole="Grp_etudiant" />
         </EntityType>
         <EntityType Name="Filiere">
@@ -199,7 +207,7 @@
             <PropertyRef Name="ID_filiere" />
           </Key>
           <Property Name="ID_filiere" Type="Int32" Nullable="false" />
-          <Property Name="Nom_filiere" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nom_filiere" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Grp_etudiant" Relationship="Self.FK__Grp_etudi__ID_fi__286302EC" FromRole="Filiere" ToRole="Grp_etudiant" />
           <NavigationProperty Name="Matiere" Relationship="Self.Filiere_contient_matiere" FromRole="Filiere" ToRole="Matiere" />
         </EntityType>
@@ -208,23 +216,30 @@
             <PropertyRef Name="ID_groupe" />
           </Key>
           <Property Name="ID_groupe" Type="Int32" Nullable="false" />
-          <Property Name="ID_filiere" Type="Int32" />
-          <Property Name="Nbr_etudiant" Type="Int32" />
+          <Property Name="ID_filiere" Type="Int32" Nullable="false" />
+          <Property Name="Nbr_etudiant" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Etudiant" Relationship="Self.FK__Etudiant__ID_gro__2B3F6F97" FromRole="Grp_etudiant" ToRole="Etudiant" />
           <NavigationProperty Name="Filiere" Relationship="Self.FK__Grp_etudi__ID_fi__286302EC" FromRole="Grp_etudiant" ToRole="Filiere" />
           <NavigationProperty Name="Matiere" Relationship="Self.Grp_etudie_matiere" FromRole="Grp_etudiant" ToRole="Matiere" />
+        </EntityType>
+        <EntityType Name="Helper">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VALUE" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Matiere">
           <Key>
             <PropertyRef Name="ID_matiere" />
           </Key>
           <Property Name="ID_matiere" Type="Int32" Nullable="false" />
-          <Property Name="Nom_matiere" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Nom_matiere" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Filiere" Relationship="Self.Filiere_contient_matiere" FromRole="Matiere" ToRole="Filiere" />
           <NavigationProperty Name="Grp_etudiant" Relationship="Self.Grp_etudie_matiere" FromRole="Matiere" ToRole="Grp_etudiant" />
         </EntityType>
         <Association Name="FK__Etudiant__ID_gro__2B3F6F97">
-          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="0..1" />
+          <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="1" />
           <End Role="Etudiant" Type="Self.Etudiant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Grp_etudiant">
@@ -236,7 +251,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__Grp_etudi__ID_fi__286302EC">
-          <End Role="Filiere" Type="Self.Filiere" Multiplicity="0..1" />
+          <End Role="Filiere" Type="Self.Filiere" Multiplicity="1" />
           <End Role="Grp_etudiant" Type="Self.Grp_etudiant" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Filiere">
@@ -260,6 +275,7 @@
           <EntitySet Name="Etudiant" EntityType="Self.Etudiant" />
           <EntitySet Name="Filiere" EntityType="Self.Filiere" />
           <EntitySet Name="Grp_etudiant" EntityType="Self.Grp_etudiant" />
+          <EntitySet Name="Helper" EntityType="Self.Helper" />
           <EntitySet Name="Matiere" EntityType="Self.Matiere" />
           <AssociationSet Name="FK__Etudiant__ID_gro__2B3F6F97" Association="Self.FK__Etudiant__ID_gro__2B3F6F97">
             <End Role="Grp_etudiant" EntitySet="Grp_etudiant" />
@@ -320,6 +336,14 @@
                 <ScalarProperty Name="ID_groupe" ColumnName="ID_groupe" />
                 <ScalarProperty Name="ID_filiere" ColumnName="ID_filiere" />
                 <ScalarProperty Name="Nbr_etudiant" ColumnName="Nbr_etudiant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Helper">
+            <EntityTypeMapping TypeName="Gestion_EcoleModel.Helper">
+              <MappingFragment StoreEntitySet="Helper">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

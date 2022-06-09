@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gestion_Ecole.Authentication
+namespace Gestion_Ecole
 {
     using System;
     using System.Data.Entity;
@@ -29,6 +29,7 @@ namespace Gestion_Ecole.Authentication
         public virtual DbSet<Etudiant> Etudiant { get; set; }
         public virtual DbSet<Filiere> Filiere { get; set; }
         public virtual DbSet<Grp_etudiant> Grp_etudiant { get; set; }
+        public virtual DbSet<Helper> Helper { get; set; }
         public virtual DbSet<Matiere> Matiere { get; set; }
     }
 }

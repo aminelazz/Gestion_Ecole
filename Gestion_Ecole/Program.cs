@@ -15,9 +15,19 @@ namespace Gestion_Ecole
         [STAThread]
         static void Main()
         {
+            Gestion_Ecole db = new Gestion_Ecole();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Connect_form());
+            bool connected = db.Helper.Where(c => c.ID == "CONNECTED" && c.VALUE != 0).Count() > 0;
+            if (connected)
+            {
+                Application.Run(new main());
+            }
+            else
+            {
+                Application.Run(new Connect_form());
+            }
         }
     }
 }
